@@ -1,34 +1,26 @@
-# python_local MCP server
+# python_local MCP Server
 
-An MCP Server to run python locally
+An MCP Server that provides an interactive Python REPL (Read-Eval-Print Loop) environment.
 
 ## Components
 
 ### Resources
 
-The server implements a simple note storage system with:
-- Custom note:// URI scheme for accessing individual notes
-- Each note resource has a name, description and text/plain mimetype
-
-### Prompts
-
-The server provides a single prompt:
-- summarize-notes: Creates summaries of all stored notes
-  - Optional "style" argument to control detail level (brief/detailed)
-  - Generates prompt combining all current notes with style preference
+The server provides access to REPL session history:
+- Custom `repl://` URI scheme for accessing session history
+- Each session's history can be viewed as a text/plain resource
+- History shows input code and corresponding output for each execution
 
 ### Tools
 
 The server implements one tool:
-- add-note: Adds a new note to the server
-  - Takes "name" and "content" as required string arguments
-  - Updates server state and notifies clients of resource changes
+- `python_repl`: Executes Python code in a persistent session
+  - Takes `code` (Python code to execute) and `session_id` as required arguments
+  - Maintains separate state for each session
+  - Supports both expressions and statements
+  - Captures and returns stdout/stderr output
 
 ## Configuration
-
-[TODO: Add configuration details specific to your implementation]
-
-## Quickstart
 
 ### Install
 
@@ -39,13 +31,13 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 <details>
   <summary>Development/Unpublished Servers Configuration</summary>
-  ```
+  ```json
   "mcpServers": {
     "python_local": {
       "command": "uv",
       "args": [
         "--directory",
-        "/Users/alecv/dev/random/imessage/python_local",
+        "/path/to/python_local",
         "run",
         "python_local"
       ]
@@ -56,7 +48,7 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 <details>
   <summary>Published Servers Configuration</summary>
-  ```
+  ```json
   "mcpServers": {
     "python_local": {
       "command": "uvx",
@@ -100,12 +92,10 @@ Note: You'll need to set PyPI credentials via environment variables or command f
 Since MCP servers run over stdio, debugging can be challenging. For the best debugging
 experience, we strongly recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector).
 
-
 You can launch the MCP Inspector via [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) with this command:
 
 ```bash
-npx @modelcontextprotocol/inspector uv --directory /Users/alecv/dev/random/imessage/python_local run python-local
+npx @modelcontextprotocol/inspector uv --directory /path/to/python_local run python-local
 ```
-
 
 Upon launching, the Inspector will display a URL that you can access in your browser to begin debugging.

@@ -49,7 +49,7 @@ async def handle_list_tools() -> list[types.Tool]:
     return [
         types.Tool(
             name="python_repl",
-            description="Interactive Python REPL that maintains session state. NOTE THE USER DOES NOT SEE THE STDOUT/STDERR OUTPUT, MAKE SURE TO FORMAT/SUMMARIZE IT APPROPRIATELY IN YOUR RESPONSE TO THE USER",
+            description="Interactive Python REPL that maintains session state. NOTE THE USER DOES NOT SEE THE STDOUT/STDERR OUTPUT, MAKE SURE TO FORMAT/SUMMARIZEc IT APPROPRIATELY IN YOUR RESPONSE TO THE USER",
             inputSchema={
                 "type": "object",
                 "properties": {
